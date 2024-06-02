@@ -1,26 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CursoController;
 
+Route::get('/',HomeController::class);
 
-Route::get('/', function () {
-    return view('welcome');
+/*Route::get('cursos',[CursoController::class,'index']);
+Route::get('cursos/create',[CursoController::class,'create']);
+Route::get('cursos/{curso}', [CursoController::class,'show']);*/
+
+Route::controller(CursoController::class)->group(function () {
+    Route::get('cursos','index');
+    Route::get('cursos/create','create');
+    Route::get('cursos/{curso}','show');
 });
-
-Route::get('cursos', function(){
-    return "Bienvenido a la pagina de cursos";
-});
-
-Route::get('cursos/create', function () {
-    return "En esta pagina podras crear un curso";
-});
-
-//Unica ruta con dos posibles salidas
-Route::get('cursos/{curso}/{categoria?}', function ($curso,$categoria = null) {
-    if ($categoria) {
-        return "Bienvenido al curso $curso de categoria $categoria";
-    } else {
-        return "Bienvenido al curso $curso";
-    }
-});
-
